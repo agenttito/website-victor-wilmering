@@ -1,0 +1,40 @@
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 400;
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
+  border-radius: 50%;
+  background: var(--color-black);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    width 0.3s var(--ease-out),
+    height 0.3s var(--ease-out),
+    margin 0.3s var(--ease-out),
+    background-color 0.3s ease;
+}
+
+.custom-cursor-label {
+  opacity: 0;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--color-white);
+  white-space: nowrap;
+  transition: opacity 0.2s ease;
+}
+
+.custom-cursor--view {
+  width: 64px;
+  height: 64px;
+  margin: -32px 0 0 -32px;
+  background: var(--color-black);
+}
+
+.custom-cursor--view .custom-cursor-label {
+  opacity: 1;
+}

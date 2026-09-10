@@ -1,0 +1,328 @@
+/* ---------------------------------------------------------------
+   Design tokens
+--------------------------------------------------------------- */
+:root {
+  /* Palette — mostly white / light-grey, black type, bright accents
+     pulled from the creative tools in the hero film (Adobe-style
+     app swatches, paint palette, ruler + scissors, transition swirl). */
+  --color-black: #0a0a0a;
+  --color-ink: #141312;
+  --color-white: #ffffff;
+  --color-paper: #faf9f7;
+  --color-grey-50: #f4f3f1;
+  --color-grey-100: #eae8e4;
+  --color-grey-200: #dad7d1;
+  --color-grey-300: #b9b5ac;
+  --color-grey-500: #86817a;
+  --color-grey-700: #4c4a45;
+
+  --accent-orange: #ff7a1a;
+  /* Darker text-safe variant of --accent-orange — 4.5:1+ on paper, for
+     small/regular-weight text where the bright accent fails contrast. */
+  --accent-orange-text: #b84b0a;
+  --accent-blue: #2f7dff;
+  --accent-magenta: #ff2d6b;
+  --accent-teal: #12b8a6;
+
+  --color-bg: var(--color-paper);
+  --color-fg: var(--color-black);
+  --color-fg-muted: var(--color-grey-700);
+  --color-line: var(--color-grey-200);
+
+  --font-display: 'Space Grotesk', 'Helvetica Neue', Arial, sans-serif;
+  --font-body: 'Manrope', 'Helvetica Neue', Arial, sans-serif;
+
+  --container-max: 1440px;
+  --gutter: clamp(20px, 5vw, 64px);
+
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 32px;
+  --radius-xl: 48px;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --fs-h1: clamp(2.6rem, 6.5vw, 6.4rem);
+  --fs-h2: clamp(2.1rem, 4.6vw, 4.2rem);
+  --fs-h3: clamp(1.5rem, 2.6vw, 2.2rem);
+  --fs-lead: clamp(1.1rem, 1.6vw, 1.5rem);
+  --fs-body: clamp(1rem, 1.05vw, 1.125rem);
+  --fs-small: 0.875rem;
+  --fs-eyebrow: 0.8125rem;
+
+  color-scheme: light;
+  scrollbar-color: var(--color-grey-300) transparent;
+}
+
+/* ---------------------------------------------------------------
+   Reset
+--------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+html.menu-open {
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+}
+
+img,
+video,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+figure {
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+}
+
+input,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+::selection {
+  background: var(--color-black);
+  color: var(--color-paper);
+}
+
+/* Visible, high-contrast focus state — never suppressed */
+:focus-visible {
+  outline: 2px solid var(--color-black);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Skip link */
+.skip-link {
+  position: fixed;
+  top: -100px;
+  left: 16px;
+  z-index: 1000;
+  background: var(--color-black);
+  color: var(--color-paper);
+  padding: 12px 20px;
+  border-radius: var(--radius-sm);
+  transition: top 0.2s var(--ease-out);
+}
+
+.skip-link:focus-visible {
+  top: 16px;
+}
+
+/* ---------------------------------------------------------------
+   Layout helpers
+--------------------------------------------------------------- */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-body);
+  font-size: var(--fs-eyebrow);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-fg-muted);
+}
+
+.eyebrow::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent-orange);
+  flex-shrink: 0;
+}
+
+.section {
+  position: relative;
+  padding-block: clamp(80px, 12vw, 160px);
+}
+
+.section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: clamp(40px, 6vw, 80px);
+}
+
+/* Glass surface — used sparingly for nav, chips, cards */
+.glass {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.btn {
+  --btn-fg: var(--color-white);
+  --btn-bg: var(--color-black);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 28px;
+  border-radius: 999px;
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
+  transition:
+    transform 0.4s var(--ease-out),
+    background-color 0.3s ease,
+    color 0.3s ease,
+    box-shadow 0.3s ease;
+  will-change: transform;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px -12px rgba(10, 10, 10, 0.4);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn-outline {
+  --btn-fg: var(--color-black);
+  --btn-bg: transparent;
+  border: 1.5px solid var(--color-grey-200);
+}
+
+.btn-outline:hover {
+  border-color: var(--color-black);
+  box-shadow: none;
+}
+
+.btn-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Reveal-on-scroll primitive (see hooks/useReveal) */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.9s var(--ease-out),
+    transform 0.9s var(--ease-out);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ---------------------------------------------------------------
+   Global motion preferences
+--------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Custom cursor: hide native cursor only when our cursor is active (fine pointer, motion allowed) */
+.cursor-enabled,
+.cursor-enabled a,
+.cursor-enabled button {
+  cursor: none;
+}
