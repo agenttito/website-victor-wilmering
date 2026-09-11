@@ -1,66 +1,75 @@
 export const navLinks = [
-  { label: 'Work', href: '#work' },
-  { label: 'About', href: '#about' },
-  { label: 'Services', href: '#services' },
-  { label: 'Contact', href: '#contact' },
+  { key: 'work', href: '#work', label: { en: 'Work', nl: 'Werk' } },
+  { key: 'about', href: '#about', label: { en: 'About', nl: 'Over' } },
+  { key: 'services', href: '#services', label: { en: 'Services', nl: 'Diensten' } },
+  { key: 'contact', href: '#contact', label: { en: 'Contact', nl: 'Contact' } },
 ]
 
 export const services = [
   {
     number: '01',
-    title: 'Brand Identity',
-    description:
-      'Naming, logo systems, colour and type — foundations built to hold up across every touchpoint.',
+    title: { en: 'Brand Identity', nl: 'Merkidentiteit' },
+    description: {
+      en: 'Naming, logo systems, colour and type — foundations built to hold up across every touchpoint.',
+      nl: 'Naamgeving, logosystemen, kleur en typografie — fundamenten die overeind blijven op elk contactpunt.',
+    },
   },
   {
     number: '02',
-    title: 'Art Direction',
-    description:
-      'A clear visual point of view for photography, campaigns and creative teams to work from.',
+    title: { en: 'Art Direction', nl: 'Art direction' },
+    description: {
+      en: 'A clear visual point of view for photography, campaigns and creative teams to work from.',
+      nl: 'Een helder visueel uitgangspunt voor fotografie, campagnes en creatieve teams om vanuit te werken.',
+    },
   },
   {
     number: '03',
-    title: 'Campaign Design',
-    description:
-      'Concept-led campaigns that carry one idea across print, digital, motion and out-of-home.',
+    title: { en: 'Campaign Design', nl: 'Campagnedesign' },
+    description: {
+      en: 'Concept-led campaigns that carry one idea across print, digital, motion and out-of-home.',
+      nl: 'Conceptgedreven campagnes die één idee laten landen in print, digitaal, motion en buitenreclame.',
+    },
   },
   {
     number: '04',
-    title: 'Digital Design',
-    description:
-      'Websites and product interfaces designed with the same rigour as print — fast, considered, on-brand.',
+    title: { en: 'Digital Design', nl: 'Digitaal Ontwerp' },
+    description: {
+      en: 'Websites and product interfaces designed with the same rigour as print — fast, considered, on-brand.',
+      nl: 'Websites en productinterfaces ontworpen met dezelfde precisie als print — snel, doordacht, on-brand.',
+    },
   },
   {
     number: '05',
-    title: 'Social Content',
-    description:
-      'Flexible template systems that keep a brand recognisable across fast-moving social channels.',
+    title: { en: 'Social Content', nl: 'Sociale Content' },
+    description: {
+      en: 'Flexible template systems that keep a brand recognisable across fast-moving social channels.',
+      nl: 'Flexibele templatesystemen die een merk herkenbaar houden op snel bewegende social kanalen.',
+    },
   },
   {
     number: '06',
-    title: 'Print & Packaging',
-    description:
-      'Structural packaging, editorial layout and print production, from concept to press check.',
+    title: { en: 'Print & Packaging', nl: 'Print & Verpakking' },
+    description: {
+      en: 'Structural packaging, editorial layout and print production, from concept to press check.',
+      nl: 'Structurele verpakkingen, redactionele lay-out en printproductie, van concept tot druktest.',
+    },
   },
 ]
 
 // Replace these with Victor's real contact details before launch.
 export const contactLinks = [
   {
-    label: 'Email Victor',
-    value: 'hello@victorwilmering.com',
+    label: { en: 'Email Victor', nl: 'Mail Victor' },
     href: 'mailto:hello@victorwilmering.com',
     isPlaceholder: true,
   },
   {
-    label: 'LinkedIn',
-    value: 'in/victorwilmering',
+    label: { en: 'LinkedIn', nl: 'LinkedIn' },
     href: 'https://www.linkedin.com/in/victor-wilmering-REPLACE',
     isPlaceholder: true,
   },
   {
-    label: 'Instagram',
-    value: '@victorwilmering',
+    label: { en: 'Instagram', nl: 'Instagram' },
     href: 'https://www.instagram.com/victorwilmering-REPLACE',
     isPlaceholder: true,
   },

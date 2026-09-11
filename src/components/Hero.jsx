@@ -1,13 +1,8 @@
 import { useEffect, useRef } from 'react'
 import { useReducedMotion } from '../hooks/useReducedMotion'
 import { useScrollHeroVideo } from '../hooks/useScrollHeroVideo'
+import { useLanguage } from '../i18n/useLanguage'
 import './Hero.css'
-
-const PHRASES = [
-  { text: 'Ideas start with a sketch.', start: 0.16, end: 0.36 },
-  { text: 'Design gives them a voice.', start: 0.52, end: 0.7 },
-  { text: 'Details make them memorable.', start: 0.78, end: 0.94 },
-]
 
 const TITLE_FADE_END = 0.07
 
@@ -23,6 +18,8 @@ function windowOpacity(progress, start, end) {
 
 export default function Hero() {
   const reducedMotion = useReducedMotion()
+  const { t } = useLanguage()
+  const phrases = t.hero.phrases
 
   const sectionRef = useRef(null)
   const stageRef = useRef(null)
@@ -46,7 +43,7 @@ export default function Hero() {
     }
     phraseRefs.current.forEach((el, i) => {
       if (!el) return
-      const { start, end } = PHRASES[i]
+      const { start, end } = phrases[i]
       const opacity = windowOpacity(progress, start, end)
       el.style.opacity = opacity
       el.style.transform = `translateY(${(1 - opacity) * 14}px)`
@@ -77,7 +74,7 @@ export default function Hero() {
     <section
       ref={sectionRef}
       className={`hero-scroll${reducedMotion ? ' is-static' : ''}`}
-      aria-label="Victor Wilmering — introduction"
+      aria-label={t.a11y.heroLabel}
     >
       <div ref={stageRef} className="hero-stage">
         <div className="hero-media">
@@ -124,9 +121,7 @@ export default function Hero() {
                   }}
                 />
               </svg>
-              <span className="visually-hidden">
-                Loading hero animation, {Math.round(loadProgress * 100)}% ready
-              </span>
+              <span className="visually-hidden">{t.a11y.loadingHero(Math.round(loadProgress * 100))}</span>
             </div>
           )}
         </div>
@@ -135,24 +130,21 @@ export default function Hero() {
           <div ref={titleRef} className="hero-title-block">
             <h1 className="hero-title">
               Victor Wilmering
-              <span className="hero-title-sub">Graphic Designer</span>
-              <span className="hero-title-location">Amsterdam</span>
+              <span className="hero-title-sub">{t.hero.role}</span>
+              <span className="hero-title-location">{t.hero.location}</span>
             </h1>
-            <p className="hero-lead">
-              Creating distinctive identities, campaigns and digital experiences for over 10
-              years.
-            </p>
+            <p className="hero-lead">{t.hero.lead}</p>
           </div>
 
           <div ref={scrollCueRef} className="hero-scroll-cue">
             <span className="hero-scroll-cue-line" aria-hidden="true" />
-            <span>Scroll to enter my creative world</span>
+            <span>{t.hero.scrollCue}</span>
           </div>
 
           <div className="hero-phrases" aria-hidden={reducedMotion}>
-            {PHRASES.map((phrase, i) => (
+            {phrases.map((phrase, i) => (
               <p
-                key={phrase.text}
+                key={`phrase-${i}`}
                 ref={(el) => {
                   phraseRefs.current[i] = el
                 }}

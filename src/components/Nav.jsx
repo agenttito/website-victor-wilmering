@@ -1,8 +1,38 @@
 import { useEffect, useRef, useState } from 'react'
 import { navLinks } from '../data/content'
+import { useLanguage } from '../i18n/useLanguage'
 import './Nav.css'
 
+function LanguageSwitch({ className }) {
+  const { lang, setLang, t } = useLanguage()
+
+  return (
+    <div className={`lang-switch${className ? ` ${className}` : ''}`} role="group" aria-label={t.a11y.language}>
+      <button
+        type="button"
+        className={`lang-switch-option${lang === 'en' ? ' is-active' : ''}`}
+        aria-pressed={lang === 'en'}
+        onClick={() => setLang('en')}
+      >
+        EN
+      </button>
+      <span className="lang-switch-divider" aria-hidden="true">
+        /
+      </span>
+      <button
+        type="button"
+        className={`lang-switch-option${lang === 'nl' ? ' is-active' : ''}`}
+        aria-pressed={lang === 'nl'}
+        onClick={() => setLang('nl')}
+      >
+        NL
+      </button>
+    </div>
+  )
+}
+
 export default function Nav() {
+  const { lang, t } = useLanguage()
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const toggleRef = useRef(null)
@@ -43,10 +73,10 @@ export default function Nav() {
             Victor Wilmering
           </a>
 
-          <nav className="nav-links" aria-label="Primary">
+          <nav className="nav-links" aria-label={t.a11y.primaryNav}>
             {navLinks.map((link) => (
               <a key={link.href} href={link.href} className="nav-link">
-                {link.label}
+                {link.label[lang]}
               </a>
             ))}
           </nav>
@@ -54,8 +84,10 @@ export default function Nav() {
           <div className="nav-right">
             <span className="nav-available">
               <span className="nav-available-dot" aria-hidden="true" />
-              Available for work
+              {t.nav.availableForWork}
             </span>
+
+            <LanguageSwitch className="nav-lang" />
 
             <button
               ref={toggleRef}
@@ -65,7 +97,7 @@ export default function Nav() {
               aria-controls="mobile-menu"
               onClick={() => setMenuOpen((v) => !v)}
             >
-              <span className="visually-hidden">{menuOpen ? 'Close menu' : 'Open menu'}</span>
+              <span className="visually-hidden">{menuOpen ? t.a11y.closeMenu : t.a11y.openMenu}</span>
               <span className={`nav-toggle-bars${menuOpen ? ' is-open' : ''}`} aria-hidden="true">
                 <span />
                 <span />
@@ -80,10 +112,10 @@ export default function Nav() {
         className={`mobile-menu${menuOpen ? ' is-open' : ''}`}
         role="dialog"
         aria-modal="true"
-        aria-label="Site menu"
+        aria-label={t.a11y.siteMenu}
         inert={!menuOpen}
       >
-        <nav className="mobile-menu-links" aria-label="Mobile">
+        <nav className="mobile-menu-links" aria-label={t.a11y.mobileNav}>
           {navLinks.map((link, i) => (
             <a
               key={link.href}
@@ -93,15 +125,16 @@ export default function Nav() {
               onClick={handleLinkClick}
               style={{ transitionDelay: menuOpen ? `${80 + i * 60}ms` : '0ms' }}
             >
-              {link.label}
+              {link.label[lang]}
             </a>
           ))}
         </nav>
         <div className="mobile-menu-footer">
           <span className="nav-available">
             <span className="nav-available-dot" aria-hidden="true" />
-            Available for work
+            {t.nav.availableForWork}
           </span>
+          <LanguageSwitch className="mobile-menu-lang" />
         </div>
       </div>
     </>

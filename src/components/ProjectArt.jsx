@@ -1,3 +1,5 @@
+import { useLanguage } from '../i18n/useLanguage'
+
 const ACCENT_VARS = {
   orange: 'var(--accent-orange)',
   blue: 'var(--accent-blue)',
@@ -21,6 +23,7 @@ function initialsOf(name) {
  * `project.image` field is reserved for that.
  */
 export default function ProjectArt({ project }) {
+  const { t } = useLanguage()
   const accent = ACCENT_VARS[project.accent] ?? ACCENT_VARS.orange
   const initials = initialsOf(project.client)
 
@@ -30,7 +33,7 @@ export default function ProjectArt({ project }) {
       viewBox="0 0 400 300"
       preserveAspectRatio="xMidYMid slice"
       role="img"
-      aria-label={`${project.client} — placeholder artwork`}
+      aria-label={t.work.artworkAlt(project.client)}
     >
       <rect width="400" height="300" fill="var(--color-grey-50)" />
       <Motif motif={project.motif} accent={accent} />

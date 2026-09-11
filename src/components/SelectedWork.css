@@ -170,8 +170,7 @@
   max-height: 6em;
 }
 
-.work-card::before {
-  content: 'View project';
+.work-card-badge {
   position: absolute;
   z-index: 2;
   top: clamp(18px, 2.2vw, 28px);
@@ -193,8 +192,8 @@
     transform 0.3s var(--ease-out);
 }
 
-.work-card:hover::before,
-.work-card:focus-visible::before {
+.work-card:hover .work-card-badge,
+.work-card:focus-visible .work-card-badge {
   opacity: 1;
   transform: translateY(0);
 }
@@ -221,7 +220,7 @@
   .work-card-media .project-art,
   .work-card-title,
   .work-card-desc,
-  .work-card::before {
+  .work-card-badge {
     transition: none !important;
   }
 }

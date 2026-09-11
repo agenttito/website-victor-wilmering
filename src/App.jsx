@@ -12,6 +12,8 @@ import Contact from './components/Contact'
 import Footer from './components/Footer'
 import CustomCursor from './components/CustomCursor'
 import { useReducedMotion } from './hooks/useReducedMotion'
+import { LanguageProvider } from './i18n/LanguageContext'
+import { useLanguage } from './i18n/useLanguage'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -61,9 +63,19 @@ export default function App() {
   }, [reducedMotion])
 
   return (
+    <LanguageProvider>
+      <AppContent cursorMode={cursorMode} setCursorMode={setCursorMode} />
+    </LanguageProvider>
+  )
+}
+
+function AppContent({ cursorMode, setCursorMode }) {
+  const { t } = useLanguage()
+
+  return (
     <div id="top">
       <a href="#main" className="skip-link">
-        Skip to content
+        {t.a11y.skipToContent}
       </a>
 
       <CustomCursor mode={cursorMode} />

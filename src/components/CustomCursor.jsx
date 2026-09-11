@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useLanguage } from '../i18n/useLanguage'
 import './CustomCursor.css'
 
 /**
@@ -7,6 +8,7 @@ import './CustomCursor.css'
  * Disabled entirely on touch devices and when reduced motion is requested.
  */
 export default function CustomCursor({ mode }) {
+  const { t } = useLanguage()
   const [enabled] = useState(() => {
     const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -46,7 +48,7 @@ export default function CustomCursor({ mode }) {
 
   return (
     <div ref={dotRef} className={`custom-cursor${mode ? ` custom-cursor--${mode}` : ''}`} aria-hidden="true">
-      <span className="custom-cursor-label">View</span>
+      <span className="custom-cursor-label">{t.work.viewShort}</span>
     </div>
   )
 }

@@ -1,11 +1,13 @@
 import { useRef, useState } from 'react'
 import { projects } from '../data/projects'
 import { useReveal } from '../hooks/useReveal'
+import { useLanguage } from '../i18n/useLanguage'
 import ProjectArt from './ProjectArt'
 import ProjectModal from './ProjectModal'
 import './SelectedWork.css'
 
 export default function SelectedWork({ onCursorChange }) {
+  const { lang, t } = useLanguage()
   const [activeProject, setActiveProject] = useState(null)
   const scopeRef = useReveal()
   const lastTriggerRef = useRef(null)
@@ -25,13 +27,10 @@ export default function SelectedWork({ onCursorChange }) {
       <div className="container">
         <div className="section-head" data-reveal>
           <div>
-            <span className="eyebrow">Selected Work</span>
-            <h2 className="work-heading">A decade of ideas, made visible.</h2>
+            <span className="eyebrow">{t.work.eyebrow}</span>
+            <h2 className="work-heading">{t.work.heading}</h2>
           </div>
-          <p className="work-intro">
-            Six projects spanning identity, campaigns and digital work — each one built from a
-            single clear idea, carried through with precision.
-          </p>
+          <p className="work-intro">{t.work.intro}</p>
         </div>
 
         <div className="work-grid">
@@ -52,11 +51,14 @@ export default function SelectedWork({ onCursorChange }) {
               </span>
               <span className="work-card-meta">
                 <span className="work-card-top">
-                  <span className="work-card-category">{project.category}</span>
+                  <span className="work-card-category">{project.category[lang]}</span>
                   <span className="work-card-year">{project.year}</span>
                 </span>
                 <span className="work-card-title">{project.client}</span>
-                <span className="work-card-desc">{project.description}</span>
+                <span className="work-card-desc">{project.description[lang]}</span>
+              </span>
+              <span className="work-card-badge" aria-hidden="true">
+                {t.work.viewProject}
               </span>
             </button>
           ))}

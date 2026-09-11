@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { services } from '../data/content'
 import { useReveal } from '../hooks/useReveal'
+import { useLanguage } from '../i18n/useLanguage'
 import './Services.css'
 
 export default function Services() {
+  const { lang, t } = useLanguage()
   const [openIndex, setOpenIndex] = useState(0)
   const scopeRef = useReveal()
 
@@ -12,8 +14,8 @@ export default function Services() {
       <div className="container">
         <div className="section-head" data-reveal>
           <div>
-            <span className="eyebrow">Services</span>
-            <h2 className="services-heading">Where I add the most value.</h2>
+            <span className="eyebrow">{t.services.eyebrow}</span>
+            <h2 className="services-heading">{t.services.heading}</h2>
           </div>
         </div>
 
@@ -21,7 +23,7 @@ export default function Services() {
           {services.map((service, i) => {
             const isOpen = openIndex === i
             return (
-              <li key={service.title} className="service-row">
+              <li key={service.number} className="service-row">
                 <button
                   type="button"
                   className="service-trigger"
@@ -30,7 +32,7 @@ export default function Services() {
                   onClick={() => setOpenIndex(isOpen ? -1 : i)}
                 >
                   <span className="service-number">{service.number}</span>
-                  <span className="service-title">{service.title}</span>
+                  <span className="service-title">{service.title[lang]}</span>
                   <span className={`service-icon${isOpen ? ' is-open' : ''}`} aria-hidden="true">
                     <svg viewBox="0 0 20 20" width="18" height="18">
                       <path d="M10 3v14M3 10h14" stroke="currentColor" strokeWidth="1.4" fill="none" strokeLinecap="round" />
@@ -42,7 +44,7 @@ export default function Services() {
                   className={`service-panel${isOpen ? ' is-open' : ''}`}
                   role="region"
                 >
-                  <p>{service.description}</p>
+                  <p>{service.description[lang]}</p>
                 </div>
               </li>
             )

@@ -1,8 +1,10 @@
 import { useEffect, useRef } from 'react'
+import { useLanguage } from '../i18n/useLanguage'
 import ProjectArt from './ProjectArt'
 import './ProjectModal.css'
 
 export default function ProjectModal({ project, onClose }) {
+  const { lang, t } = useLanguage()
   const dialogRef = useRef(null)
   const closeRef = useRef(null)
   const isOpen = Boolean(project)
@@ -54,7 +56,7 @@ export default function ProjectModal({ project, onClose }) {
         onMouseDown={(e) => e.stopPropagation()}
       >
         <button ref={closeRef} type="button" className="project-modal-close" onClick={onClose}>
-          <span className="visually-hidden">Close project</span>
+          <span className="visually-hidden">{t.a11y.closeProject}</span>
           <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true">
             <path d="M4 4l12 12M16 4L4 16" stroke="currentColor" strokeWidth="1.6" fill="none" strokeLinecap="round" />
           </svg>
@@ -66,22 +68,19 @@ export default function ProjectModal({ project, onClose }) {
 
         <div className="project-modal-body">
           <div className="project-modal-top">
-            <span className="project-modal-category">{project.category}</span>
+            <span className="project-modal-category">{project.category[lang]}</span>
             <span className="project-modal-year">{project.year}</span>
           </div>
           <h3 id="project-modal-title" className="project-modal-title">
             {project.client}
           </h3>
-          <p className="project-modal-desc">{project.description}</p>
+          <p className="project-modal-desc">{project.description[lang]}</p>
           <ul className="project-modal-tags">
-            {project.tags.map((tag) => (
+            {project.tags[lang].map((tag) => (
               <li key={tag}>{tag}</li>
             ))}
           </ul>
-          <p className="project-modal-note">
-            Full case study coming soon — this preview shows placeholder artwork standing in for
-            real project photography.
-          </p>
+          <p className="project-modal-note">{t.work.modalNote}</p>
         </div>
       </div>
     </div>

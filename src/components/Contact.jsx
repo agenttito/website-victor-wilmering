@@ -1,5 +1,6 @@
 import { contactLinks } from '../data/content'
 import { useReveal } from '../hooks/useReveal'
+import { useLanguage } from '../i18n/useLanguage'
 import './Contact.css'
 
 const ICONS = {
@@ -29,34 +30,38 @@ const ICONS = {
   ),
 }
 
+// Icons are keyed by the stable English label regardless of display language.
+const ICON_KEYS = ['Email Victor', 'LinkedIn', 'Instagram']
+
 export default function Contact() {
+  const { lang, t } = useLanguage()
   const scopeRef = useReveal()
 
   return (
     <section id="contact" className="section contact-section" ref={scopeRef}>
       <div className="container contact-inner">
         <span className="eyebrow" data-reveal>
-          Contact
+          {t.contact.eyebrow}
         </span>
         <h2 className="contact-heading" data-reveal>
-          Have a project in mind?
+          {t.contact.heading[0]}
           <br />
-          Let’s make something memorable.
+          {t.contact.heading[1]}
         </h2>
 
         <div className="contact-actions" data-reveal data-reveal-delay="120">
           {contactLinks.map((link, i) => (
             <a
-              key={link.label}
+              key={ICON_KEYS[i]}
               href={link.href}
               className={`btn contact-btn${i === 0 ? '' : ' btn-outline'}`}
               target={link.href.startsWith('http') ? '_blank' : undefined}
               rel={link.href.startsWith('http') ? 'noreferrer' : undefined}
             >
               <svg className="btn-icon" viewBox="0 0 20 20">
-                {ICONS[link.label]}
+                {ICONS[ICON_KEYS[i]]}
               </svg>
-              {link.label}
+              {link.label[lang]}
             </a>
           ))}
         </div>
