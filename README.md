@@ -28,3 +28,17 @@ To add a new language: add a key to `translations` and to every `{ en, nl }` fie
 ## Hero video
 
 `public/video/victor-wilmering-hero.mp4` is scroll-scrubbed (see `src/hooks/useScrollHeroVideo.js` and `src/components/Hero.jsx`). It was re-encoded from the original source for the web: downscaled, stripped of audio, and re-keyframed every 12 frames (`-g 12 -sc_threshold 0`) so seeking during scroll stays smooth. If the source video is ever replaced, re-encode with the same settings rather than dropping in an arbitrary file — a normal long-GOP encode will seek noticeably less smoothly.
+
+`public/video/victor-wilmering-hero-mobile.mp4` is a lighter 1280px-wide encode of the same file, served automatically to viewports ≤768px via a `<source media="(max-width: 768px)">` in `Hero.jsx` — smaller download and easier to decode on phones. Re-encode both whenever the source video changes:
+
+```bash
+ffmpeg -i source.mp4 -vf "scale=2560:-2" -an -c:v libx264 -preset slow -crf 23 \
+  -profile:v high -bf 0 -pix_fmt yuv420p -g 12 -keyint_min 12 -sc_threshold 0 \
+  -movflags +faststart victor-wilmering-hero.mp4
+
+ffmpeg -i source.mp4 -vf "scale=1280:-2" -an -c:v libx264 -preset slow -crf 24 \
+  -profile:v high -bf 0 -pix_fmt yuv420p -g 12 -keyint_min 12 -sc_threshold 0 \
+  -movflags +faststart victor-wilmering-hero-mobile.mp4
+```
+
+**Mobile scrubbing note:** `useScrollHeroVideo.js` fires a muted play/pause cycle as soon as the video element mounts. This isn't decorative — mobile Safari and Chrome often don't actually fetch new byte ranges for a `<video>` that's never been asked to play, so `currentTime` seeks can silently do nothing until that happens. Don't remove it without testing scroll-scrubbing on a real phone afterward.

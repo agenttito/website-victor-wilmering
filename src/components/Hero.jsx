@@ -100,6 +100,7 @@ export default function Hero() {
               aria-hidden="true"
               tabIndex={-1}
             >
+              <source src="/video/victor-wilmering-hero-mobile.mp4" type="video/mp4" media="(max-width: 768px)" />
               <source src="/video/victor-wilmering-hero.mp4" type="video/mp4" />
             </video>
           )}

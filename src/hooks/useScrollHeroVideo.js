@@ -68,6 +68,22 @@ export function useScrollHeroVideo({ sectionRef, stageRef, videoRef, enabled, on
     if (video.duration) durationRef.current = video.duration
     if (video.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) markReady()
 
+    // Mobile Safari/Chrome only reliably fetch new byte ranges for a
+    // <video> that has actually been asked to play at least once —
+    // otherwise later `currentTime` seeks can silently no-op, which is
+    // why scroll-scrubbing can look frozen on phones even though it
+    // works fine on desktop. A muted + playsInline video is allowed to
+    // autoplay without a user gesture on every major mobile browser, so
+    // fire a play/pause cycle immediately to unlock real seeking. It's
+    // invisible either way since the poster still fully covers the
+    // video at this point (status isn't 'ready' yet).
+    const playPromise = video.play()
+    if (playPromise && typeof playPromise.then === 'function') {
+      playPromise.then(() => video.pause()).catch(() => {
+        /* autoplay blocked — the rAF loop's repeated seeks are the fallback */
+      })
+    }
+
     // Safety net: an unusually slow network or an unplayable source should
     // never leave the loader spinning forever — fall back to the static
     // poster. If the video does eventually become playable, `markReady`
@@ -105,12 +121,18 @@ export function useScrollHeroVideo({ sectionRef, stageRef, videoRef, enabled, on
       },
     })
 
+    // 'load' may already have fired by the time this effect runs (common
+    // once the video finishes preloading), in which case the listener
+    // below would never call back — so also force one refresh shortly
+    // after mount regardless.
     const refresh = () => ScrollTrigger.refresh()
     window.addEventListener('load', refresh)
+    const refreshTimer = window.setTimeout(refresh, 300)
 
     return () => {
       trigger.kill()
       window.removeEventListener('load', refresh)
+      window.clearTimeout(refreshTimer)
     }
   }, [enabled, sectionRef, stageRef])
 
