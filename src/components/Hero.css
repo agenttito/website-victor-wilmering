@@ -44,16 +44,6 @@
   background: var(--color-paper);
 }
 
-/* Narrow / tall viewports: switch to contain so the character and
-   design objects are never cropped top or bottom. */
-@media (max-aspect-ratio: 4/5) {
-  .hero-media-layer {
-    object-fit: contain;
-    object-position: center center;
-    background: var(--color-paper);
-  }
-}
-
 .hero-fade-overlay {
   position: absolute;
   inset: 0;
